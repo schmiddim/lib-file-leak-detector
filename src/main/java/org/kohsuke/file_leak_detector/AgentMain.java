@@ -314,7 +314,7 @@ public class AgentMain {
          * SocketInputStream/SocketOutputStream does not maintain a separate FileDescriptor. They just all piggy back on
          * the same SocketImpl instance.
          */
-        if (Runtime.version().feature() < 19) {
+        
             spec.add(new ClassTransformSpec(
                     "java/net/PlainSocketImpl",
                     // this is where a new file descriptor is allocated.
@@ -346,7 +346,7 @@ public class AgentMain {
                     // of the native socketClose0() method, then you see that it actually doesn't close
                     // a file descriptor.
                     new CloseInterceptor("socketClose")));
-        }
+        
         spec.add(new ClassTransformSpec(
                 "sun/nio/ch/SocketChannelImpl",
                 new OpenSocketInterceptor(
